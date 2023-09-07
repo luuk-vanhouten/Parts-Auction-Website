@@ -1,6 +1,5 @@
 <script>
-    export let params;
+  export let params;
 </script>
 
 <h1>About</h1>
-
