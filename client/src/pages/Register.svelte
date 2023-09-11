@@ -114,10 +114,6 @@
     color: #ffb775;
   }
 
-  form .register-form {
-    display: none;
-  }
-
   @media screen and (max-width: 800px) {
     .left {
       grid-column: 1 / span 2;

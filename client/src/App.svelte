@@ -54,6 +54,9 @@
     /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
     font-family: Arial, Helvetica, sans-serif !important;
+    background-color: #a95dff;
+    padding: 0px;
+    margin: 0px;
   }
 
   body {
@@ -65,7 +68,7 @@
     margin-left: 10px !important;
     margin-right: 10px !important;
     position: relative;
-    min-height: 50vh;
+    min-height: 60vh;
     /* padding-bottom: 6rem; */
   }
 </style>

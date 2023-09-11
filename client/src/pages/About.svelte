@@ -2,4 +2,6 @@
   export let params;
 </script>
 
-<h1>About</h1>
+<main>
+  <h1>About</h1>
+</main>

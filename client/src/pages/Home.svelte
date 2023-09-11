@@ -1,8 +1,7 @@
 <script>
-  import Counter from "../lib/Counter.svelte";
-
   export let params;
 </script>
 
-<h1>waesuhdfijsewsa</h1>
-<Counter />
+<main>
+  <h1>Welcome to the PartsOnline auctioning website!</h1>
+</main>
