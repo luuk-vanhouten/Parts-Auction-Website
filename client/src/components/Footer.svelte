@@ -5,7 +5,7 @@
 <footer>
   <ul>
     <li><a href="nee.html">Voorwaarden</a></li>
-    <li><a href="nee.html">Over ons</a></li>
+    <li><a class:active={active === "/about"} href="/about">Over ons</a></li>
     <li><a href="nee.html">Contactinfo</a></li>
   </ul>
 </footer>
