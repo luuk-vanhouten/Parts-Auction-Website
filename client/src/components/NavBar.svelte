@@ -11,7 +11,9 @@
 <nav>
   <ul>
     <li class="left"><a class:active={active === "/"} href="/">Home</a></li>
-    <li class="left"><a href="zoek-pagina.html">Zoeken</a></li>
+    <li class="left">
+      <a class:active={active === "/search"} href="/search">Zoeken</a>
+    </li>
 
     {#if $token === ""}
       <li class="right">
@@ -28,12 +30,16 @@
         <a class:active={active === "/"} on:click={logout} href="/">Uitloggen</a
         >
       </li>
-      <li class="right"><a href="mijn-account.html">Mijn account</a></li>
+      <li class="right">
+        <a class:active={active === "/account"} href="/account">Mijn account</a>
+      </li>
     {/if}
 
     {#if $token !== ""}
       {#if $jwtPayload.role === "admin"}
-        <li class="right"><a href="admin.html">Admin</a></li>
+        <li class="right">
+          <a class:active={active === "/admin"} href="/admin">Admin</a>
+        </li>
       {/if}
     {/if}
   </ul>

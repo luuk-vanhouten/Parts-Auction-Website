@@ -40,7 +40,7 @@
     margin: 20px;
   }
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 1091px) {
     .productSec {
       grid-template-columns: repeat(2, 1fr);
     }

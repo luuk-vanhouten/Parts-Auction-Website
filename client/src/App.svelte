@@ -5,7 +5,11 @@
   import About from "./pages/About.svelte";
   import Login from "./pages/Login.svelte";
   import Register from "./pages/Register.svelte";
-  import Product from "./pages/Item.svelte";
+  import Item from "./pages/ItemPage.svelte";
+  import Admin from "./pages/Admin.svelte";
+  import Account from "./pages/Account.svelte";
+  import Search from "./pages/Search.svelte";
+  import TermsConditions from "./pages/TermsConditions.svelte";
 
   import Header from "./components/Header.svelte";
   import NavBar from "./components/NavBar.svelte";
@@ -32,8 +36,24 @@
     currentRoute = ctx.pathname;
   });
   router("/item/:id", (ctx) => {
-    page = Product;
+    page = Item;
     params = ctx.params;
+    currentRoute = ctx.pathname;
+  });
+  router("/admin", (ctx) => {
+    page = Admin;
+    currentRoute = ctx.pathname;
+  });
+  router("/account", (ctx) => {
+    page = Account;
+    currentRoute = ctx.pathname;
+  });
+  router("/search", (ctx) => {
+    page = Search;
+    currentRoute = ctx.pathname;
+  });
+  router("/termsconditions", (ctx) => {
+    page = TermsConditions;
     currentRoute = ctx.pathname;
   });
 

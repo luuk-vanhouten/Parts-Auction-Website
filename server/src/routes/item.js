@@ -17,14 +17,14 @@ router.get("/:id", (req, res) => {
   }
 });
 
-router.delete("/:id", verifyRole("admin"), (req, res) => {
+router.delete("/:id", verifyRole("admin"), async (req, res) => {
   const item = items.find((item) => item.id == req.params.id);
-  if (item) {
-    items.splice(items.indexOf(item), 1);
-    res.status(200).json({ msg: "Item deleted" });
-  } else {
-    res.status(404).json({ msg: "Item not found" });
+  if (!item) {
+    return res.status(404).json({ msg: "Item not found" });
   }
+  const index = items.indexOf(item);
+  items.splice(index, 1);
+  res.status(200).json({ msg: "Item deleted" });
 });
 
 export default router;

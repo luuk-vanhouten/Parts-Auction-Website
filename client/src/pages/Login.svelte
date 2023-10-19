@@ -6,24 +6,21 @@
   let password;
 
   async function login(event) {
-    console.log("logging in...");
     event.preventDefault();
-
-    if (await verify()) {
-      console.log($jwtPayload.role);
+    const verified = await verify();
+    if (verified) {
       if ($jwtPayload.role === "admin") {
         page.redirect("/admin");
       } else if ($jwtPayload.role === "user") {
         page.redirect("/");
       }
+      alert("Inloggen geslaagd, welkom!");
     } else {
-      alert("login failed!");
+      alert("Inloggen mislukt, probeer het opnieuw.");
     }
   }
 
   async function verify() {
-    let verified = false;
-    console.log("verifiying...");
     const response = await fetch("http://localhost:3000/auth", {
       method: "POST",
       headers: {
@@ -35,17 +32,12 @@
     if (response.status == 200) {
       const { token: tokenString } = await response.json();
       token.set(tokenString);
-      verified = true;
-      console.log("verified!");
-      return verified;
+      return true;
     } else {
-      console.log("not verified!");
-      console.log(verified);
-      return verified;
+      return false;
     }
   }
 
-  export let params;
   export let active;
 </script>
 
@@ -56,7 +48,6 @@
       class="left"
       type="text"
       required
-      id="username"
       placeholder="Gebruikersnaam"
       bind:value={username}
     />
@@ -64,11 +55,10 @@
       class="right"
       type="password"
       required
-      id="password"
       placeholder="Wachtwoord"
       bind:value={password}
     />
-    <input type="submit" id="login" value="Login" />
+    <input type="submit" value="Login" />
     <p class="message">
       Nog geen account?
       <a class:active={active === "/register"} href="/register"

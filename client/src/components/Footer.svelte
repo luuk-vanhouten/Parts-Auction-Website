@@ -22,9 +22,17 @@
     height: 7rem;
   }
 
+  footer > ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
   footer > ul > li {
     list-style-type: none;
-    float: center;
     margin: 10px;
   }
 
