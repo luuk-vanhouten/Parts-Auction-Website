@@ -10,8 +10,8 @@
     <input
       class="right"
       type="text"
-      id="phone_number"
-      placeholder="Telefoonnummer"
+      id="username"
+      placeholder="Gebruikersnaam"
     />
     <input
       class="left"
@@ -27,11 +27,13 @@
     />
     <input class="left" type="text" id="first_name" placeholder="Voornaam" />
     <input class="right" type="text" id="last_name" placeholder="Achternaam" />
-    <input class="left" type="text" id="address" placeholder="Adres" />
-    <input class="right" type="text" id="zip_code" placeholder="Postcode" />
-    <input class="middle" type="text" id="state" placeholder="Provincie" />
-    <input class="middle" type="text" id="city" placeholder="Woonplaats" />
-    <input class="middle" type="text" id="country" placeholder="Land" />
+    <input
+      class="left"
+      type="text"
+      id="phone_number"
+      placeholder="Telefoonnummer"
+    />
+    <input class="right" type="text" id="city" placeholder="Woonplaats" />
     <input type="submit" id="registreren" value="Account registreren" />
     <p class="message">
       Heeft u al een account? <a
@@ -84,7 +86,7 @@
 
   form input[type="submit"] {
     outline: 0;
-    background: #ffb775;
+    background: #d7b4ff;
     width: 100%;
     border: 0;
     padding: 15px;
@@ -111,7 +113,7 @@
   }
 
   form .message a {
-    color: #ffb775;
+    color: #d7b4ff;
   }
 
   @media screen and (max-width: 800px) {

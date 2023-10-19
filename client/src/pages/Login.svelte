@@ -1,17 +1,72 @@
 <script>
+  import { token, jwtPayload } from "../stores.js";
+  import page from "page";
+
+  let username;
+  let password;
+
+  async function login(event) {
+    console.log("logging in...");
+    event.preventDefault();
+
+    if (await verify()) {
+      console.log($jwtPayload.role);
+      if ($jwtPayload.role === "admin") {
+        page.redirect("/admin");
+      } else if ($jwtPayload.role === "user") {
+        page.redirect("/");
+      }
+    } else {
+      alert("login failed!");
+    }
+  }
+
+  async function verify() {
+    let verified = false;
+    console.log("verifiying...");
+    const response = await fetch("http://localhost:3000/auth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+    if (response.status == 200) {
+      const { token: tokenString } = await response.json();
+      token.set(tokenString);
+      verified = true;
+      console.log("verified!");
+      return verified;
+    } else {
+      console.log("not verified!");
+      console.log(verified);
+      return verified;
+    }
+  }
+
   export let params;
   export let active;
 </script>
 
 <main>
-  <form class="login-form" method="post">
+  <form class="login-form" on:submit={login}>
     <h2 class="middle" id="status">Login</h2>
-    <input class="left" type="text" id="email" placeholder="E-mailadres" />
+    <input
+      class="left"
+      type="text"
+      required
+      id="username"
+      placeholder="Gebruikersnaam"
+      bind:value={username}
+    />
     <input
       class="right"
       type="password"
+      required
       id="password"
       placeholder="Wachtwoord"
+      bind:value={password}
     />
     <input type="submit" id="login" value="Login" />
     <p class="message">
@@ -63,6 +118,20 @@
     font-size: 14px;
   }
 
+  form input[type="submit"] {
+    outline: 0;
+    background: #d7b4ff;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: black;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+    grid-column: 1 / span 2;
+  }
+
   form input[type="submit"]:hover,
   form input[type="submit"]:active,
   form input[type="submit"]:focus {
@@ -78,7 +147,7 @@
   }
 
   form .message a {
-    color: #ffb775;
+    color: #d7b4ff;
   }
 
   @media screen and (max-width: 800px) {

@@ -5,7 +5,7 @@
   import About from "./pages/About.svelte";
   import Login from "./pages/Login.svelte";
   import Register from "./pages/Register.svelte";
-  import Product from "./pages/Product.svelte";
+  import Product from "./pages/Item.svelte";
 
   import Header from "./components/Header.svelte";
   import NavBar from "./components/NavBar.svelte";
@@ -31,7 +31,7 @@
     page = Register;
     currentRoute = ctx.pathname;
   });
-  router("/product/:id", (ctx) => {
+  router("/item/:id", (ctx) => {
     page = Product;
     params = ctx.params;
     currentRoute = ctx.pathname;
@@ -55,13 +55,6 @@
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; */
     font-family: Arial, Helvetica, sans-serif !important;
     /* background-color: #a95dff; */
-    padding: 0px !important;
-    margin: 0px !important;
-  }
-
-  body {
-    background-color: #ffffff !important;
-    margin: 0px !important;
   }
 
   main {
