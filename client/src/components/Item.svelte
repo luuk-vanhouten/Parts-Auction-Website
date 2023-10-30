@@ -11,7 +11,7 @@
 <div class="item">
   <h2>{item.name}</h2>
   <img src={item.image} alt={item.name} />
-  <h4>{item.category_name}</h4>
+  <p><b>{item.category_name}</b></p>
   <p>{item.description}</p>
   <p>€{item.current_bid}</p>
   <input

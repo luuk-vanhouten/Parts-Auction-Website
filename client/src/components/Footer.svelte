@@ -4,9 +4,11 @@
 
 <footer>
   <ul>
-    <li><a href="nee.html">Voorwaarden</a></li>
+    <li><a class:active={active === "/terms"} href="/terms">Voorwaarden</a></li>
     <li><a class:active={active === "/about"} href="/about">Over ons</a></li>
-    <li><a href="nee.html">Contactinfo</a></li>
+    <li>
+      <a class:active={active === "/contact"} href="/contact">Contactinfo</a>
+    </li>
   </ul>
 </footer>
 
@@ -19,6 +21,8 @@
     color: black;
     position: relative;
     bottom: 0;
+    left: 0;
+    right: 0;
     height: 7rem;
   }
 

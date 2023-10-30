@@ -3,19 +3,19 @@ const items = [
     id: 0,
     name: "Honda B16B",
     description: "Dit is een Honda B16B motorblok uit het jaar 1998.",
-    current_bid: 10.0,
-    category_name: 1,
+    current_bid: 53,
+    category_name: "Motor onderdelen",
     location: "Utrecht",
     image:
       "https://s1.cdn.autoevolution.com/images/news/gallery/remembering-hondas-legendary-b16-the-engine-that-brought-vtec-to-the-world_11.jpg",
-    bids: [],
+    bids: [12, 32, 45, 47, 53],
   },
   {
     id: 1,
     name: "Honda S4C",
     description: "Dit is een Honda S4C versnellingsbak uit het jaar 1998.",
     current_bid: 10.0,
-    category_name: 2,
+    category_name: "Transmissie onderdelen",
     location: "Arnhem",
     image: "https://img.rnudah.com/grids/28/2833017044277023461.jpg",
     bids: [],
@@ -25,7 +25,7 @@ const items = [
     name: "Exedy Stage 1 koppelingsset",
     description: "Dit is een Exedy Stage 1 koppelingsset.",
     current_bid: 10.0,
-    category_name: 2,
+    category_name: "Koppeling onderdelen",
     location: "Nijmegen",
     image:
       "https://images.omnitek-labs.com/stage1_clutch_kit/08806fw/08806FW.jpg",
@@ -36,7 +36,7 @@ const items = [
     name: "SRS 4-2-1 Spruitstuk",
     description: "Dit is een SRS 4-2-1 spruitstuk.",
     current_bid: 10.0,
-    category_name: 3,
+    category_name: "Uitlaat",
     location: "Den Haag",
     image:
       "https://www.4-tuner.de/images/product_images/info_images/cvcfkedel421vtec.jpg",
@@ -47,7 +47,7 @@ const items = [
     name: "SRS Catback uitlaat",
     description: "Dit is een SRS Catback uitlaat systeem.",
     current_bid: 10.0,
-    category_name: 3,
+    category_name: "Uitlaat",
     location: "Rotterdam",
     image:
       "https://www.akr-performance.nl/media/products/uitlaatsysteem-civic-3-deurs-hatchback-1996-1998-14i_srs-catback-uitlaatsysteem-rvs-r60-e-keur-cbs-cv963d-r60.jpg",
@@ -58,7 +58,7 @@ const items = [
     name: "EBC Redstuff remblokken",
     description: "Dit zijn EBC remblokken.",
     current_bid: 10.0,
-    category_name: 4,
+    category_name: "Remmen",
     location: "Groningen",
     image:
       "https://cdn11.bigcommerce.com/s-6y7pa5d/images/stencil/1280x1280/products/37530/60094/EBC-Redstuff__71241.1589443605.jpg?c=2",
@@ -69,7 +69,7 @@ const items = [
     name: "EBC GD Series remschijven",
     description: "Dit zijn EBC remschijven.",
     current_bid: 10.0,
-    category_name: 4,
+    category_name: "Remmen",
     location: "Leeuwarden",
     image: "https://www.kseriesparts.com/graphics/00000001/ebc-gd_500x333.jpg",
     bids: [],
@@ -79,7 +79,7 @@ const items = [
     name: "BC Racing A-03-RH Schroefset",
     description: "Dit is een BC Racing schroefset.",
     current_bid: 10.0,
-    category_name: 5,
+    category_name: "Ophanging",
     location: "Maastricht",
     image:
       "https://modificars.fi/wp-content/uploads/2022/10/bc-racing-alustasarjat.jpg",
@@ -90,7 +90,7 @@ const items = [
     name: "Enkei RPF1 velgen",
     description: "Dit zijn Enkei RPF1 velgen.",
     current_bid: 10.0,
-    category_name: 6,
+    category_name: "Velgen",
     location: "Eindhoven",
     image:
       "https://cdn11.bigcommerce.com/s-zhf5gt60/images/stencil/1280x1280/products/4888/18347/ENKEI-RPF1-SP-144-WEB__15316.1584822241.jpg?c=2",
@@ -101,7 +101,7 @@ const items = [
     name: "Nankang NS-R2 semi-slick banden",
     description: "Dit zijn Nankang NS-2R semi-slick banden.",
     current_bid: 10.0,
-    category_name: 7,
+    category_name: "Banden",
     location: "Apeldoorn",
     image:
       "https://www.racebanden.nl/wp-content/uploads/2022/02/Nankang-NS-2R_432x484.jpg",
@@ -112,7 +112,7 @@ const items = [
     name: "Momo stuur",
     description: "Dit is een Momo stuur.",
     current_bid: 10.0,
-    category_name: 8,
+    category_name: "Interieur",
     location: "Zwolle",
     image:
       "https://nl.merlinmotorsport.co.uk/files/resized/medium/V/img/vproherit35.jpg?cachebreak=1059a1b1edee9d8c250050464e698f04",
@@ -123,7 +123,7 @@ const items = [
     name: "Bomex Type-R Spoiler",
     description: "Dit is een Bomex Type-R spoiler.",
     current_bid: 10.0,
-    category_name: 9,
+    category_name: "Exterieur",
     location: "Zutphen",
     image:
       "https://www.a4h-tech.com/media/catalog/product/cache/28d0c30ccc63d3b73999f1cc43728cc2/a/e/ae-sp-cv963d-m-f-aerodynamics-frp-spoiler-bomex-mugen-stijl-civic-96-00-3drs-all4honda.jpg",
@@ -134,7 +134,7 @@ const items = [
     name: "OEM Honda blackhousing koplampen",
     description: "Dit zijn OEM Honda blackhousing koplampen.",
     current_bid: 10.0,
-    category_name: 10,
+    category_name: "Exterieur",
     location: "Amsterdam",
     image:
       "https://m.media-amazon.com/images/I/719Euk7DbIL._AC_UF894,1000_QL80_.jpg",
@@ -145,7 +145,7 @@ const items = [
     name: "Luchtverfrisser",
     description: "Dit is een luchtverfrisser.",
     current_bid: 10.0,
-    category_name: 11,
+    category_name: "Overig",
     location: "Deventer",
     image:
       "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1629745705-turboairfreshener-1629745693.jpg?crop=1xw:1xh;center,top&resize=980:*",

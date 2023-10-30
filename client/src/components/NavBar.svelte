@@ -30,9 +30,13 @@
         <a class:active={active === "/"} on:click={logout} href="/">Uitloggen</a
         >
       </li>
-      <li class="right">
-        <a class:active={active === "/account"} href="/account">Mijn account</a>
-      </li>
+      {#if $jwtPayload.role === "user"}
+        <li class="right">
+          <a class:active={active === "/account"} href="/account"
+            >Mijn account</a
+          >
+        </li>
+      {/if}
     {/if}
 
     {#if $token !== ""}
