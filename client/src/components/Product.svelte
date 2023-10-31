@@ -1,24 +1,24 @@
 <script>
   import page from "page";
 
-  function goToItem() {
-    page.redirect(`/item/${item.id}`);
+  function goToProduct() {
+    page.redirect(`/product/${product.id}`);
   }
 
-  export let item;
+  export let product;
 </script>
 
-<div class="item">
-  <h2>{item.name}</h2>
-  <img src={item.image} alt={item.name} />
-  <p><b>{item.category_name}</b></p>
-  <p>{item.description}</p>
-  <p>€{item.current_bid}</p>
+<div class="product">
+  <h2>{product.name}</h2>
+  <img src={product.image} alt={product.name} />
+  <p><b>{product.category_name}</b></p>
+  <p>{product.description}</p>
+  <p>€{product.current_bid}</p>
   <input
     type="button"
-    class="item-button"
+    class="product-button"
     value="Bekijk product"
-    on:click={goToItem}
+    on:click={goToProduct}
   />
 </div>
 
@@ -27,7 +27,7 @@
     max-width: 300px;
   }
 
-  .item-button {
+  .product-button {
     outline: 0;
     background: #a95dff;
     width: 100%;
@@ -41,14 +41,14 @@
     grid-column: 1 / span 2;
   }
 
-  .item-button:hover,
-  .item-button:active,
-  .item-button:focus {
+  .product-button:hover,
+  .product-button:active,
+  .product-button:focus {
     background: black;
     color: white;
   }
 
-  .item {
+  .product {
     padding: 10px;
     background-color: #f2f2f2;
   }

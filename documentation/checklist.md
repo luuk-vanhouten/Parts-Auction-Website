@@ -35,6 +35,9 @@
   - [x] Design generic item page to display item information
   - [ ] Add ability to place bids on item page
   - [x] Add ability to view bids on item page
+    - [x] Highest bid
+    - [x] List of bids
+  - [x] Add timer
 
 - [ ] Make generic pages for
   - [ ] Contact page

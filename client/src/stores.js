@@ -10,4 +10,4 @@ export const jwtPayload = derived(token, (token) => {
   return payload;
 });
 
-export const items = writable(null);
+export const products = writable(null);

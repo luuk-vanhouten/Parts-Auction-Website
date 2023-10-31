@@ -1,4 +1,4 @@
-const items = [
+const products = [
   {
     id: 0,
     name: "Honda B16B",
@@ -8,7 +8,14 @@ const items = [
     location: "Utrecht",
     image:
       "https://s1.cdn.autoevolution.com/images/news/gallery/remembering-hondas-legendary-b16-the-engine-that-brought-vtec-to-the-world_11.jpg",
-    bids: [12, 32, 45, 47, 53],
+    bids: [
+      { amount: 12, user: "John" },
+      { amount: 32, user: "Jane" },
+      { amount: 45, user: "Bob" },
+      { amount: 47, user: "Alice" },
+      { amount: 53, user: "Charlie" },
+    ],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 1,
@@ -19,6 +26,7 @@ const items = [
     location: "Arnhem",
     image: "https://img.rnudah.com/grids/28/2833017044277023461.jpg",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 2,
@@ -30,6 +38,7 @@ const items = [
     image:
       "https://images.omnitek-labs.com/stage1_clutch_kit/08806fw/08806FW.jpg",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 3,
@@ -41,6 +50,7 @@ const items = [
     image:
       "https://www.4-tuner.de/images/product_images/info_images/cvcfkedel421vtec.jpg",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 4,
@@ -52,6 +62,7 @@ const items = [
     image:
       "https://www.akr-performance.nl/media/products/uitlaatsysteem-civic-3-deurs-hatchback-1996-1998-14i_srs-catback-uitlaatsysteem-rvs-r60-e-keur-cbs-cv963d-r60.jpg",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 5,
@@ -63,6 +74,7 @@ const items = [
     image:
       "https://cdn11.bigcommerce.com/s-6y7pa5d/images/stencil/1280x1280/products/37530/60094/EBC-Redstuff__71241.1589443605.jpg?c=2",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 6,
@@ -73,6 +85,7 @@ const items = [
     location: "Leeuwarden",
     image: "https://www.kseriesparts.com/graphics/00000001/ebc-gd_500x333.jpg",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 7,
@@ -84,6 +97,7 @@ const items = [
     image:
       "https://modificars.fi/wp-content/uploads/2022/10/bc-racing-alustasarjat.jpg",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 8,
@@ -95,6 +109,7 @@ const items = [
     image:
       "https://cdn11.bigcommerce.com/s-zhf5gt60/images/stencil/1280x1280/products/4888/18347/ENKEI-RPF1-SP-144-WEB__15316.1584822241.jpg?c=2",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 9,
@@ -106,6 +121,7 @@ const items = [
     image:
       "https://www.racebanden.nl/wp-content/uploads/2022/02/Nankang-NS-2R_432x484.jpg",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 10,
@@ -117,6 +133,7 @@ const items = [
     image:
       "https://nl.merlinmotorsport.co.uk/files/resized/medium/V/img/vproherit35.jpg?cachebreak=1059a1b1edee9d8c250050464e698f04",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 11,
@@ -128,6 +145,7 @@ const items = [
     image:
       "https://www.a4h-tech.com/media/catalog/product/cache/28d0c30ccc63d3b73999f1cc43728cc2/a/e/ae-sp-cv963d-m-f-aerodynamics-frp-spoiler-bomex-mugen-stijl-civic-96-00-3drs-all4honda.jpg",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 12,
@@ -139,6 +157,7 @@ const items = [
     image:
       "https://m.media-amazon.com/images/I/719Euk7DbIL._AC_UF894,1000_QL80_.jpg",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
   {
     id: 13,
@@ -150,7 +169,8 @@ const items = [
     image:
       "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1629745705-turboairfreshener-1629745693.jpg?crop=1xw:1xh;center,top&resize=980:*",
     bids: [],
+    end_time: "2023-11-05T10:00:00",
   },
 ];
 
-export default items;
+export default products;

@@ -5,7 +5,7 @@
   import About from "./pages/About.svelte";
   import Login from "./pages/Login.svelte";
   import Register from "./pages/Register.svelte";
-  import Item from "./pages/ItemPage.svelte";
+  import Product from "./pages/ProductPage.svelte";
   import Admin from "./pages/Admin.svelte";
   import Account from "./pages/Account.svelte";
   import Search from "./pages/Search.svelte";
@@ -35,8 +35,8 @@
     page = Register;
     currentRoute = ctx.pathname;
   });
-  router("/item/:id", (ctx) => {
-    page = Item;
+  router("/product/:id", (ctx) => {
+    page = Product;
     params = ctx.params;
     currentRoute = ctx.pathname;
   });

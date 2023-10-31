@@ -1,18 +1,18 @@
 <script>
   import { onMount } from "svelte";
-  import Item from "../components/Item.svelte";
-  import { items, token } from "../stores.js";
+  import Product from "../components/Product.svelte";
+  import { products, token } from "../stores.js";
 
-  let itemList = [];
+  let productList = [];
 
   onMount(() => {
-    fetchItems();
+    fetchProducts();
   });
 
-  async function fetchItems() {
-    const response = await fetch("http://localhost:3000/item");
-    items.set(await response.json());
-    itemList = $items;
+  async function fetchProducts() {
+    const response = await fetch("http://localhost:3000/product");
+    products.set(await response.json());
+    productList = $products;
   }
 </script>
 
@@ -50,8 +50,8 @@
     </select>
   </div>
   <div class="productSec">
-    {#each itemList as item (item.id)}
-      <Item {item} />
+    {#each productList as product (product.id)}
+      <Product {product} />
     {/each}
   </div>
 </main>
