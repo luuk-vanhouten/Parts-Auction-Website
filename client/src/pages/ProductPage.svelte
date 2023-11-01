@@ -1,11 +1,13 @@
 <script>
   import { onMount } from "svelte";
   import page from "page";
+  import { token, jwtPayload } from "../stores.js";
   export let params;
 
   let product = null;
   let endTime = null;
   let timeLeft = null;
+  let newBid = 0;
 
   onMount(() => {
     fetchProduct();
@@ -21,6 +23,7 @@
       }
       product = await res.json();
       endTime = new Date(product.end_time);
+      newBid = product.current_bid + 1;
     } catch (error) {
       console.error(error);
       page.redirect("/");
@@ -40,6 +43,36 @@
 
     timeLeft = { days, hours, minutes, seconds };
   }
+
+  async function submitBid() {
+    if (newBid > product.current_bid) {
+      const res = await fetch(`http://localhost:3000/bid/${params.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+          authorization: `Bearer ${$token}`,
+        },
+        body: JSON.stringify({ amount: newBid, user: $jwtPayload.username }),
+      });
+
+      if (res.status == 200) {
+        alert("Je bod is geplaatst!");
+        fetchProduct();
+      }
+      if (res.status == 404) {
+        alert("Het product is niet gevonden.");
+      }
+      if (res.status == 403) {
+        alert("Er ging iets mis met het verwerken van je bod.");
+      }
+    } else {
+      alert("Het bod moet hoger zijn dan het huidige bod.");
+    }
+    newBid = product.current_bid + 1;
+  }
+
+  export let active;
 </script>
 
 <main>
@@ -48,16 +81,40 @@
       <h1 class="product__title">{product.name}</h1>
       <img class="product__image" src={product.image} alt={product.name} />
       <p class="product__price">Huidig bod: €{product.current_bid}</p>
-      <button class="product__button">Buy now</button>
+      <div class="bid__input">
+        {#if $jwtPayload && $jwtPayload.role === "user"}
+          <input
+            type="number"
+            min={product.current_bid + 1}
+            bind:value={newBid}
+            class="input"
+          />
+          <button class="button" on:click={submitBid}>Plaats bod</button>
+        {:else if $jwtPayload && $jwtPayload.role === "admin"}
+          <a class:active={active === "/admin"} href="/admin"
+            >Ga naar admin pagina</a
+          >
+        {:else}
+          <a class:active={active === "/login"} href="/login"
+            >Log in om te bieden</a
+          >
+        {/if}
+      </div>
       <p class="product__description">{product.description}</p>
       <p class="product__timer">
-        Veiling eindigt over: {#if timeLeft}
+        {#if timeLeft && timeLeft.days <= 0 && timeLeft.hours <= 0 && timeLeft.minutes <= 0 && timeLeft.seconds <= 0}
+          Veiling afgelopen! De winnaar is {product.bids[0].user}!
+        {:else if timeLeft}
+          Veiling eindigt over:
           {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+        {:else}
+          Aan het laden...
         {/if}
       </p>
     </div>
+
     <div class="bids">
-      <h2>Biedingen</h2>
+      <h2 class="titel">Biedingen</h2>
       <ul>
         {#each product.bids.reverse() as bid}
           <li>{bid.user}: €{bid.amount}</li>
@@ -70,8 +127,6 @@
 </main>
 
 <style>
-  main {
-  }
   .product {
     display: grid;
     /* grid-template-columns: 1fr 1fr;
@@ -79,7 +134,7 @@
     grid-template-areas:
       "titel titel"
       "afbeelding prijs"
-      "afbeelding bestel-knop"
+      "afbeelding bied-vak"
       "beschrijving timer";
     grid-gap: 1rem;
     margin: 1rem 0 1rem 0;
@@ -87,8 +142,17 @@
   }
 
   .bids {
-    margin: 1rem 0 1rem 0;
+    margin: 2rem 0 2rem 0;
     background-color: #f2f2f2;
+  }
+  .bids h2 {
+    padding: 5px;
+    margin: 0;
+  }
+  .bids ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
   }
 
   .product__title {
@@ -108,26 +172,42 @@
     font-size: x-large;
   }
 
-  .product__button {
-    grid-area: bestel-knop;
-    max-width: 300px;
-    max-height: 100px;
+  .bid__input {
+    display: flex;
+    justify-content: space-between;
+    grid-area: bied-vak;
+    margin-left: 5px;
+  }
+
+  .bid__input input {
+    flex: 1;
+    height: 50px;
+    font-size: larger;
+    padding: 0 0 0 5px;
+    border: 1;
+  }
+
+  .bid__input button {
+    flex: 1;
+    grid-area: bied-vak;
     outline: 0;
-    background: #3cff00;
+    background: #a95dff;
+    height: 52.6px !important;
     border: 0;
-    padding: 15px;
+    margin-right: 100px;
     color: black;
-    font-size: 40px;
+    font-size: 20px;
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
+    max-width: 20%;
     cursor: pointer;
   }
 
-  .product__button:hover,
-  .product__button:active,
-  .product__button:focus {
-    background: #3f8d00;
-    color: white;
+  .bid__input button:hover,
+  .bid__input button:active,
+  .bid__input button:focus {
+    background: #c38eff;
+    color: black;
   }
 
   .product__description {
@@ -144,8 +224,10 @@
       grid-template-areas:
         "titel titel"
         "afbeelding afbeelding"
-        "prijs bestel-knop"
-        "beschrijving beschrijving";
+        "prijs prijs"
+        "bied-vak bied-vak"
+        "beschrijving beschrijving"
+        "timer timer";
     }
   }
 

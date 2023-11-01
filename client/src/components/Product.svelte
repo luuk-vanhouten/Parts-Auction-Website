@@ -13,7 +13,7 @@
   <img src={product.image} alt={product.name} />
   <p><b>{product.category_name}</b></p>
   <p>{product.description}</p>
-  <p>€{product.current_bid}</p>
+  <p>Huidig bod: €{product.current_bid}</p>
   <input
     type="button"
     class="product-button"
@@ -44,12 +44,16 @@
   .product-button:hover,
   .product-button:active,
   .product-button:focus {
-    background: black;
-    color: white;
+    background: #c38eff;
   }
 
   .product {
     padding: 10px;
     background-color: #f2f2f2;
+    transition: transform 0.3s ease;
+  }
+
+  .product:hover {
+    transform: scale(1.05);
   }
 </style>

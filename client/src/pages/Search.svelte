@@ -1,18 +1,61 @@
 <script>
   import { onMount } from "svelte";
+  import { products } from "../stores.js";
   import Product from "../components/Product.svelte";
-  import { products, token } from "../stores.js";
 
   let productList = [];
+  let categoryList = [];
+  let locationList = [];
+  let productSearch = "";
+  let minPrice = 0;
+  let maxPrice = 9999999999;
+  let selectedCategories = [];
+  let selectedLocations = [];
 
-  onMount(() => {
-    fetchProducts();
+  onMount(async () => {
+    await fetchProducts();
+    makeUniqueFilterList();
   });
 
   async function fetchProducts() {
     const response = await fetch("http://localhost:3000/product");
-    products.set(await response.json());
-    productList = $products;
+    productList = await response.json();
+    products.set(productList);
+  }
+
+  async function searchProduct() {
+    await fetchProducts(); // Refetch products
+
+    let searchList = productList.filter((product) => {
+      const nameMatch = product.name
+        .toLowerCase()
+        .includes(productSearch.toLowerCase());
+      const priceMatch =
+        product.current_bid >= minPrice && product.current_bid <= maxPrice;
+      const categoryMatch =
+        selectedCategories.length === 0 ||
+        selectedCategories.includes(product.category_name);
+      const locationMatch =
+        selectedLocations.length === 0 ||
+        selectedLocations.includes(product.location);
+      return nameMatch && priceMatch && categoryMatch && locationMatch;
+    });
+
+    if (searchList.length === 0) {
+      alert("Geen producten gevonden met deze filters.");
+      searchList = productList;
+    }
+
+    productList = searchList;
+  }
+
+  function makeUniqueFilterList() {
+    categoryList = [
+      ...new Set(productList.map((product) => product.category_name)),
+    ];
+    locationList = [...new Set(productList.map((product) => product.location))];
+    selectedCategories = [...categoryList];
+    selectedLocations = [...locationList];
   }
 </script>
 
@@ -21,34 +64,51 @@
   <div class="search">
     <input
       type="text"
-      placeholder="Voer naam product in..."
-      class="form-control"
-      id="product"
+      bind:value={productSearch}
+      placeholder="Zoek naar producten..."
     />
-    <input
-      type="submit"
-      value="Zoeken op product naam"
-      class="product-knop"
-      id="product-button"
-    />
+    <button on:click={searchProduct}>Zoek</button>
   </div>
-  <div class="filter-box">
-    <h3>Filters</h3>
-    <label for="price-range">Price range:</label>
-    <input type="range" id="price-range" name="price-range" min="0" max="100" />
-    <label for="category">Category:</label>
-    <select id="category" name="category">
-      <option value="1">Category 1</option>
-      <option value="2">Category 2</option>
-      <option value="3">Category 3</option>
-    </select>
-    <label for="location">Location:</label>
-    <select id="location" name="location">
-      <option value="Amsterdam">Amsterdam</option>
-      <option value="Rotterdam">Rotterdam</option>
-      <option value="Utrecht">Utrecht</option>
-    </select>
+  <div class="filters">
+    <fieldset>
+      <legend style="font-size: 20;"><b>Minimale prijs:</b></legend>
+      <input type="number" bind:value={minPrice} placeholder="Min prijs" />
+    </fieldset>
+
+    <fieldset>
+      <legend style="font-size: 20;"><b>Maximale prijs:</b></legend>
+      <input type="number" bind:value={maxPrice} placeholder="Max prijs" />
+    </fieldset>
+
+    <fieldset>
+      <legend style="font-size: 20;"><b>Categorie:</b></legend>
+      {#each categoryList as category (category)}
+        <label>
+          <input
+            type="checkbox"
+            bind:group={selectedCategories}
+            value={category}
+          />
+          {category}
+        </label><br />
+      {/each}
+    </fieldset>
+
+    <fieldset>
+      <legend style="font-size: 20;"><b>Locatie:</b></legend>
+      {#each locationList as location (location)}
+        <label>
+          <input
+            type="checkbox"
+            bind:group={selectedLocations}
+            value={location}
+          />
+          {location}
+        </label><br />
+      {/each}
+    </fieldset>
   </div>
+
   <div class="productSec">
     {#each productList as product (product.id)}
       <Product {product} />
@@ -60,7 +120,8 @@
   .search {
     display: flex;
   }
-  .filter-box {
+
+  .filters {
     position: relative;
     left: 0;
     top: 0;
@@ -71,8 +132,14 @@
     margin-top: 20px;
     margin-right: 20px;
     padding: 20px;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   }
+
+  .filters input[type="number"] {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+
   .search input[type="text"] {
     outline: 0;
     background: #f2f2f2;
@@ -84,9 +151,9 @@
     font-size: 14px;
   }
 
-  .search input[type="submit"] {
+  .search button {
     outline: 0;
-    background: #ffb775;
+    background: #a95dff;
     width: 300px;
     border: 0;
     margin: 0 0 15px;
@@ -99,11 +166,10 @@
     grid-column: 1 / span 2;
   }
 
-  .search input[type="submit"]:hover,
-  .search input[type="submit"]:active,
-  .search input[type="submit"]:focus {
-    background: black;
-    color: white;
+  .search button:hover,
+  .search button:active,
+  .search button:focus {
+    background: #c38eff;
   }
 
   .productSec {
@@ -113,15 +179,19 @@
     margin: 20px;
   }
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 1032px) {
     .productSec {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(1, 1fr);
     }
   }
 
-  @media screen and (max-width: 768px) {
-    .productSec {
-      grid-template-columns: repeat(1, 1fr);
+  @media screen and (max-width: 672px) {
+    .filters {
+      position: none;
+      float: none;
+      width: 85%;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 </style>

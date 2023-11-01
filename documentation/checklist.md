@@ -6,23 +6,20 @@
 
   - [x] Make search functions
     - [x] Search by name of item
-  - [ ] Add ability to filter on multiple properties
-    - [ ] Price
-    - [ ] Category
-    - [ ] Location
+  - [x] Add ability to filter on multiple properties
+    - [x] Price
+    - [x] Category
+    - [x] Location
 
-- [ ] Add ability to register new users
+- [x] Add ability to register new users
 
 - [ ] Add admin functions
 
   - [ ] Update items
-  - [ ] Delete items
-  - [ ] Add items
-  - [ ] Update users
-  - [ ] Delete users
-  - [ ] Add users
+  - [x] Delete items
+  - [x] Add items
 
-- [ ] Add ability to place bids
+- [x] Add ability to place bids
 
 - [ ] Add account page for users
 
@@ -33,7 +30,7 @@
 - [x] Make item page
 
   - [x] Design generic item page to display item information
-  - [ ] Add ability to place bids on item page
+  - [x] Add ability to place bids on item page
   - [x] Add ability to view bids on item page
     - [x] Highest bid
     - [x] List of bids

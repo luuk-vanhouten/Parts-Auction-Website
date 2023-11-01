@@ -1,39 +1,71 @@
 <script>
+  let username = "";
+  let password1 = "";
+  let password2 = "";
+
+  const register = async (event) => {
+    event.preventDefault();
+    if (password1 !== password2) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    const res = await fetch("http://localhost:3000/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password: password1,
+        confirmPassword: password2,
+      }),
+    });
+
+    const data = await res.json();
+    if (res.status === 201) {
+      alert("Registered!");
+      window.location.href = "/login";
+    } else if (res.status === 409) {
+      alert("Username already exists");
+    } else {
+      alert(`Registration failed: ${data.msg}`);
+    }
+  };
+
   export let active;
 </script>
 
 <main>
-  <form class="register-form" method="post">
-    <h2 class="middle">Registreren</h2>
-    <input class="left" type="text" id="email" placeholder="E-mailadres" />
+  <form class="register-form" on:submit|preventDefault={register}>
+    <h2 class="middle">Register</h2>
+    <input class="left" type="text" id="email" placeholder="Email address" />
     <input
       class="right"
       type="text"
-      id="username"
+      required
+      name="username"
       placeholder="Gebruikersnaam"
+      bind:value={username}
     />
     <input
       class="left"
       type="password"
-      id="password1"
+      required
+      name="password1"
       placeholder="Wachtwoord"
+      bind:value={password1}
     />
     <input
       class="right"
       type="password"
-      id="password2"
+      required
+      name="password2"
       placeholder="Herhaal wachtwoord"
+      bind:value={password2}
     />
-    <input class="left" type="text" id="first_name" placeholder="Voornaam" />
-    <input class="right" type="text" id="last_name" placeholder="Achternaam" />
-    <input
-      class="left"
-      type="text"
-      id="phone_number"
-      placeholder="Telefoonnummer"
-    />
-    <input class="right" type="text" id="city" placeholder="Woonplaats" />
-    <input type="submit" id="registreren" value="Account registreren" />
+    <button type="submit">Registreren</button>
     <p class="message">
       Heeft u al een account? <a
         class:active={active === "/login"}
@@ -82,9 +114,9 @@
     font-size: 14px;
   }
 
-  form input[type="submit"] {
+  form button[type="submit"] {
     outline: 0;
-    background: #d7b4ff;
+    background: #a95dff;
     width: 100%;
     border: 0;
     padding: 15px;
@@ -96,11 +128,10 @@
     grid-column: 1 / span 2;
   }
 
-  form input[type="submit"]:hover,
-  form input[type="submit"]:active,
-  form input[type="submit"]:focus {
-    background: black;
-    color: white;
+  form button[type="submit"]:hover,
+  form button[type="submit"]:active,
+  form button[type="submit"]:focus {
+    background: #c38eff;
   }
 
   form .message {

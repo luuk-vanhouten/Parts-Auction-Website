@@ -109,7 +109,7 @@
 
   form input[type="submit"] {
     outline: 0;
-    background: #d7b4ff;
+    background: #a95dff;
     width: 100%;
     border: 0;
     padding: 15px;
@@ -124,8 +124,7 @@
   form input[type="submit"]:hover,
   form input[type="submit"]:active,
   form input[type="submit"]:focus {
-    background: black;
-    color: white;
+    background: #c38eff;
   }
 
   form .message {
