@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import auth from "./routes/auth.js";
 import bid from "./routes/bid.js";
-import product from "./routes/productRouter.js";
+import product from "./routes/product.js";
 
 const app = express();
 const port = process.env.PORT || 3000;

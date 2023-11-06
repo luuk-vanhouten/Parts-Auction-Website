@@ -39,6 +39,15 @@
         end_time: endDateTime,
       }),
     });
+
+    const data = await response.json();
+    if (response.status == 201) {
+      alert(`${data.msg}`);
+    } else if (response.status == 500) {
+      alert(`${data.msg}`);
+    } else {
+      alert(`Product toevoegen mislukt: ${data.msg}`);
+    }
   }
 
   async function updateProduct(event) {
@@ -106,10 +115,10 @@
     </div>
     <div class="form-group">
       <input
-        type="text"
+        type="number"
         id="startPrice"
         name="startPrice"
-        placeholder="Start prijs"
+        placeholder="Start bod"
         bind:value={startPrice}
       />
     </div>

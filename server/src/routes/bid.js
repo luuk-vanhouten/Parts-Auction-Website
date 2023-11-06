@@ -30,11 +30,13 @@ router
       return res.status(404).json({ msg: "Product not found" });
     }
 
-    if (product.winner || product.endDate < Date.now()) {
+    const endTime = new Date(product.end_time);
+
+    if (endTime.getTime() < Date.now()) {
       return res.status(403).json({ msg: "Product already sold" });
     }
 
-    if (product.currentPrice >= req.body.amount) {
+    if (product.current_bid >= req.body.amount) {
       return res.status(403).json({ msg: "Bid too low" });
     }
 
@@ -52,7 +54,7 @@ router
       client.write(`data: ${JSON.stringify(bidUpdate)}\n\n`);
     });
 
-    res.status(200).json({ msg: "Bid was placed succesfully" });
+    res.status(200).json({ msg: "Bid was placed successfully" });
   });
 
 export default router;

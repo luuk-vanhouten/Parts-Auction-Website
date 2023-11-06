@@ -5,13 +5,8 @@ const users = [
     role: "admin",
   },
   {
-    email: "user@gmail.com",
     username: "user",
     password: "$2b$10$JB2AUBTYFY9nFRzOOg8cxOrwHD8orp3ypg3N1/hCL8TRpPgfUMbHe",
-    first_name: "John",
-    last_name: "Doe",
-    phonenumber: "0612345678",
-    city: "Deventer",
     role: "user",
   },
 ];

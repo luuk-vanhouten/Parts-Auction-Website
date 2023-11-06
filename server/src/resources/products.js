@@ -15,7 +15,7 @@ const products = [
       { amount: 47, user: "Alice" },
       { amount: 53, user: "Charlie" },
     ],
-    end_time: "2023-11-01T14:00:00",
+    end_time: "2023-12-20T14:00:00",
   },
   {
     id: 1,
@@ -30,7 +30,7 @@ const products = [
       { amount: 45, user: "Sarah" },
       { amount: 60, user: "David" },
     ],
-    end_time: "2023-11-03T16:30:00",
+    end_time: "2023-11-13T16:30:00",
   },
   {
     id: 2,
@@ -46,7 +46,7 @@ const products = [
       { amount: 65, user: "Ethan" },
       { amount: 70, user: "Olivia" },
     ],
-    end_time: "2023-11-05T12:45:00",
+    end_time: "2023-11-01T12:45:00",
   },
   {
     id: 3,
@@ -70,7 +70,7 @@ const products = [
     image:
       "https://www.akr-performance.nl/media/products/uitlaatsysteem-civic-3-deurs-hatchback-1996-1998-14i_srs-catback-uitlaatsysteem-rvs-r60-e-keur-cbs-cv963d-r60.jpg",
     bids: [{ amount: 40, user: "William" }],
-    end_time: "2023-11-09T10:30:00",
+    end_time: "2023-11-19T10:30:00",
   },
   {
     id: 5,
@@ -82,7 +82,7 @@ const products = [
     image:
       "https://cdn11.bigcommerce.com/s-6y7pa5d/images/stencil/1280x1280/products/37530/60094/EBC-Redstuff__71241.1589443605.jpg?c=2",
     bids: [{ amount: 42, user: "Mia" }],
-    end_time: "2023-11-11T14:45:00",
+    end_time: "2024-11-21T14:45:00",
   },
   {
     id: 6,
@@ -93,7 +93,7 @@ const products = [
     location: "Leeuwarden",
     image: "https://www.kseriesparts.com/graphics/00000001/ebc-gd_500x333.jpg",
     bids: [{ amount: 50, user: "Daniel" }],
-    end_time: "2023-11-13T13:00:00",
+    end_time: "2023-11-19T13:00:00",
   },
   {
     id: 7,
@@ -105,7 +105,7 @@ const products = [
     image:
       "https://modificars.fi/wp-content/uploads/2022/10/bc-racing-alustasarjat.jpg",
     bids: [{ amount: 55, user: "Nora" }],
-    end_time: "2023-11-15T16:15:00",
+    end_time: "2023-11-25T16:15:00",
   },
   {
     id: 8,
@@ -117,7 +117,7 @@ const products = [
     image:
       "https://cdn11.bigcommerce.com/s-zhf5gt60/images/stencil/1280x1280/products/4888/18347/ENKEI-RPF1-SP-144-WEB__15316.1584822241.jpg?c=2",
     bids: [{ amount: 45, user: "Liam" }],
-    end_time: "2023-11-17T15:30:00",
+    end_time: "2023-12-17T15:30:00",
   },
   {
     id: 9,

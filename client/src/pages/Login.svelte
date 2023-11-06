@@ -75,12 +75,12 @@
     gap: 10px;
     position: relative;
     z-index: 1;
-    background: #ffffff;
+    background: #f2f2f2;
     max-width: 720px;
-    margin: 100px auto 100px;
+    margin: 10% auto 10%;
     padding: 45px;
     text-align: center;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); */
   }
 
   .left {
@@ -98,7 +98,7 @@
   form input[type="text"],
   input[type="password"] {
     outline: 0;
-    background: #f2f2f2;
+    background: #ffffff;
     width: 100%;
     border: 0;
     margin: 0 0 15px;

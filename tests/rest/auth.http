@@ -1,24 +1,106 @@
-###
-### Retrieve a token that can be used for calls requiring authentication
-###
-POST {{protocol}}{{host}}:{{port}}/auth
+### Login with a valid user
+POST {{protocol}}{{host}}:{{port}}/auth/
 Content-Type: application/json
 Accept: application/json
 
 {
   "username": "user",
-  "password": "pass"
+  "password": "user"
 }
 
 > {%
-client.global.set("token", "m1jnH3l3L4ng3en5uperV31l!geT0ken");
+    client.test("Response should return 200 OK", function () {
+        client.assert(response.status === 200, "Response status should be 200");
+        client.assert(response.body.msg === "Login successful!", "Message should be: Login successful!");
+        client.assert(response.body.token !== undefined, "Token should be defined");
+    });
 %}
 
-
-###
-### Invalidate the token
-###
-DELETE {{protocol}}{{host}}:{{port}}/auth
+### Login with an invalid user
+POST {{protocol}}{{host}}:{{port}}/auth/
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{token}}
+
+{
+  "username": "test",
+  "password": "test"
+}
+
+> {%
+    client.test("Response should return 401 Unauthorized", function () {
+        client.assert(response.status === 401, "Response status should be 401");
+        client.assert(response.body.msg === "Invalid credentials", "Message should be: Invalid credentials");
+    });
+%}
+
+### Register a new user
+POST {{protocol}}{{host}}:{{port}}/auth/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "test",
+  "password": "test",
+  "confirmPassword": "test"
+}
+
+> {%
+    client.test("Response should return 201 Created", function () {
+        client.assert(response.status === 201, "Response status should be 201");
+        client.assert(response.body.msg === "Account created", "Message should be: Account Created");
+    });
+%}
+
+### Login with the new user
+POST {{protocol}}{{host}}:{{port}}/auth/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "test",
+  "password": "test"
+}
+
+> {%
+    client.test("Response should return 200 OK", function () {
+        client.assert(response.status === 200, "Response status should be 200");
+        client.assert(response.body.msg === "Login successful!", "Message should be: Login successful!");
+        client.assert(response.body.token !== undefined, "Token should be defined");
+    });
+%}
+
+### Register a new user with an username that already exists
+POST {{protocol}}{{host}}:{{port}}/auth/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "user",
+  "password": "test",
+  "confirmPassword": "test"
+}
+
+> {%
+    client.test("Response should return 409 Conflict", function () {
+        client.assert(response.status === 409, "Response status should be 409");
+        client.assert(response.body.msg === "Username already exists", "Message should be: Username already exists");
+    });
+%}
+
+### Register a new user where password and passwordConfirm do not match
+POST {{protocol}}{{host}}:{{port}}/auth/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "test1",
+  "password": "test",
+  "passwordConfirm": "test!"
+}
+
+> {%
+    client.test("Response should return 400 Bad Request", function () {
+        client.assert(response.status === 400, "Response status should be 400");
+        client.assert(response.body.msg === "Passwords do not match", "Message should be: Passwords do not match");
+    });
+%}

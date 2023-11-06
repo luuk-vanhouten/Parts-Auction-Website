@@ -56,6 +56,7 @@
         body: JSON.stringify({ amount: newBid, user: $jwtPayload.username }),
       });
 
+      const data = await res.json();
       if (res.status == 200) {
         alert("Je bod is geplaatst!");
         fetchProduct();
@@ -64,10 +65,10 @@
         alert("Het product is niet gevonden.");
       }
       if (res.status == 403) {
-        alert("Er ging iets mis met het verwerken van je bod.");
+        alert(`Je mag niet bieden op dit product: ${data.msg}`);
       }
     } else {
-      alert("Het bod moet hoger zijn dan het huidige bod.");
+      alert("Er ging iets mis met het verwerken van je bod.");
     }
     newBid = product.current_bid + 1;
   }

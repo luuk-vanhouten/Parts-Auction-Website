@@ -1,0 +1,398 @@
+### Retrieve an admin token that can be used for calls requiring authentication
+POST {{protocol}}{{host}}:{{port}}/auth
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+### Retrieve an user token that can be used for calls requiring authentication
+POST {{protocol}}{{host}}:{{port}}/auth
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "user",
+  "password": "user"
+}
+
+### Requesting all products
+GET {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+
+> {%
+    client.test("Response should return 200 OK", function () {
+        client.assert(response.status === 200, "Response status should be 200");
+        client.assert(response.body.length > 0, "Response status should not be 200 if no products found");
+    })
+%}
+
+### Reqeusting a specific product
+GET {{protocol}}{{host}}:{{port}}/product/0
+Content-Type: application/json
+Accept: application/json
+
+> {%
+    client.test("Response should retrun 200 OK", function () {
+        client.assert(response.status === 200, "Response status should be 200");
+        client.assert(response.body.id === 0, "Product id should be the same as the one requested");
+    })
+%}
+
+### Requesting a specific product that doenst exist
+GET {{protocol}}{{host}}:{{port}}/product/-1
+Content-Type: application/json
+Accept: application/json
+
+> {%
+    client.test("Response should return 404 Not Found", function () {
+        client.assert(response.status === 404, "Response status should be 404");
+        client.assert(response.body.msg === "Product not found", "Message should be: Product not found");
+    })
+%}
+
+### Deleting a product as an admin
+DELETE {{protocol}}{{host}}:{{port}}/product/0
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+> {%
+    client.test("Response should return 200 OK", function () {
+        client.assert(response.status === 200, "Response status should be 200");
+        client.assert(response.body.msg === "Product deleted", "Message should be: Product deleted");
+    })
+%}
+
+### Deleting a product that doenst exist
+DELETE {{protocol}}{{host}}:{{port}}/product/-1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+> {%
+    client.test("Response should return 404 Not Found", function () {
+        client.assert(response.status === 404, "Response status should be 404");
+        client.assert(response.body.msg === "Product not found", "Message should be: Product not found");
+    })
+%}
+
+### Deleting a product as a user
+DELETE {{protocol}}{{host}}:{{port}}/product/0
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+> {%
+    client.test("Response should return 403 Forbidden", function () {
+        client.assert(response.status === 403, "Response status should be 403");
+        client.assert(response.body.msg === "You don't have permissions!", "Message should be: You don't have permissions!");
+    })
+%}
+
+### Deleting a product without a token
+DELETE {{protocol}}{{host}}:{{port}}/product/0
+Content-Type: application/json
+Accept: application/json
+
+> {%
+    client.test("Resonse should return 401 Unauthorized", function () {
+        client.assert(response.status === 401, "Response status should be 401");
+        client.assert(response.body.msg === "No token provided", "Message should be: No token provided")
+    })
+%}
+
+### Adding a product as an admin
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "test",
+  "category_name": "test",
+  "image": "test.png",
+  "description": "test",
+  "location": "test",
+  "current_bid": 50,
+  "end_time": "2023-11-06T09:00"
+}
+
+> {%
+    client.test("Response should return 201 Created", function () {
+        client.assert(response.status === 201, "Response status should be 201");
+        client.assert(response.body.msg === "Product toegevoegd", "Message should be: Product toegevoegd");
+    })
+%}
+
+### Adding a product as an user
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "test",
+  "category_name": "test",
+  "image": "test.png",
+  "description": "test",
+  "location": "test",
+  "current_bid": 50,
+  "end_time": "2023-11-06T09:00"
+}
+
+> {%
+    client.test("Response should return 403 Forbidden", function () {
+        client.assert(response.status === 403, "Response status should be 403 Forbidden");
+        client.assert(response.body.msg === "You don't have permissions!", "Message should be: You don't have permissions!");
+    })
+%}
+
+### Adding a product without a token
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "test",
+  "category_name": "test",
+  "image": "test.png",
+  "description": "test",
+  "location": "test",
+  "current_bid": 50,
+  "end_time": "2023-11-06T09:00"
+}
+
+> {%
+    client.test("Response should return 401 Unauthorized", function () {
+        client.assert(response.status === 401, "Response status should be 401");
+        client.assert(response.body.msg === "No token provided", "Message should be: No token provided");
+    })
+%}
+
+### Adding a product as an admin without name
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "category_name": "test",
+  "image": "test.png",
+  "description": "test",
+  "location": "test",
+  "current_bid": 50,
+  "end_time": "2023-11-06T09:00"
+}
+
+> {%
+    client.test("Response should return 400 Bad Request", function () {
+        client.assert(response.status === 400, "Response status should be 400");
+        client.assert(response.body.msg === "Naam is vereist", "Message should be: Naam is vereist");
+    })
+%}
+
+### Adding a product as an admin without category
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "test",
+  "image": "test.png",
+  "description": "test",
+  "location": "test",
+  "current_bid": 50,
+  "end_time": "2023-11-06T09:00"
+}
+
+> {%
+    client.test("Response should return 400 Bad Request", function () {
+        client.assert(response.status === 400, "Response status should be 400");
+        client.assert(response.body.msg === "Categorie is vereist", "Message should be: Categorie is vereist");
+    })
+%}
+
+### Adding a product as an admin without image
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "test",
+  "category_name": "test",
+  "description": "test",
+  "location": "test",
+  "current_bid": 50,
+  "end_time": "2023-11-06T09:00"
+}
+
+> {%
+    client.test("Response should return 400 Bad Request", function () {
+        client.assert(response.status === 400, "Response status should be 400");
+        client.assert(response.body.msg === "Afbeelding is vereist", "Message should be: Afbeelding is vereist");
+    })
+%}
+
+### Adding a product as an admin without decription
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "test",
+  "category_name": "test",
+  "image": "test.png",
+  "location": "test",
+  "current_bid": 50,
+  "end_time": "2023-11-06T09:00"
+}
+
+> {%
+    client.test("Response should return 400 Bad Request", function () {
+        client.assert(response.status === 400, "Response status should be 400");
+        client.assert(response.body.msg === "Beschrijving is vereist", "Message should be: Beschrijving is vereist");
+    })
+%}
+
+### Adding a product as an admin without a location
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "test",
+  "category_name": "test",
+  "image": "test.png",
+  "description": "test",
+  "current_bid": 50,
+  "end_time": "2023-11-06T09:00"
+}
+
+> {%
+    client.test("Response should return 400 Bad Request", function () {
+        client.assert(response.status === 400, "Response status should be 400");
+        client.assert(response.body.msg === "Locatie is vereist", "Message should be: Locatie is vereist");
+    })
+%}
+
+### Adding a product as an admin without starting bid
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "test",
+  "category_name": "test",
+  "image": "test.png",
+  "description": "test",
+  "location": "test",
+  "end_time": "2023-11-06T09:00"
+}
+
+> {%
+    client.test("Response should return 400 Bad Request", function () {
+        client.assert(response.status === 400, "Response status should be 400");
+        client.assert(response.body.msg === "Startbod is vereist", "Message should be: Startbod is vereist");
+    })
+%}
+
+### Adding a product as an admin without end_time
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "test",
+  "category_name": "test",
+  "image": "test.png",
+  "description": "test",
+  "location": "test",
+  "current_bid": 50
+}
+
+> {%
+    client.test("Response should return 400 Bad Request", function () {
+        client.assert(response.status === 400, "Response status should be 400");
+        client.assert(response.body.msg === "Einddatum is vereist", "Message should be: Einddatum is vereist");
+    })
+%}
+
+### Adding a product as an admin with end_time in the past
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "test",
+  "category_name": "test",
+  "image": "test.png",
+  "description": "test",
+  "location": "test",
+  "current_bid": 50,
+  "end_time": "2022-11-06T09:00"
+}
+
+> {%
+    client.test("Response should return 400 Bad Request", function () {
+        client.assert(response.status === 400, "Response status should be 400");
+        client.assert(response.body.msg === "Einddatum moet in de toekomst liggen", "Message should be: Einddatum moet in de toekomst liggen");
+    })
+%}
+
+### Adding a product as an admin with end_time not being the correct format
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "test",
+  "category_name": "test",
+  "image": "test.png",
+  "description": "test",
+  "location": "test",
+  "current_bid": 50,
+  "end_time": "06-11-2023T09:00"
+}
+
+> {%
+    client.test("Response should return 400 Bad Request", function () {
+        client.assert(response.status === 400, "Response status should be 400");
+        client.assert(response.body.msg === "Einddatum moet in het formaat yyyy-mm-ddThh-mm zijn", "Message should be: Einddatum moet in het formaat yyyy-mm-ddThh-mm zijn");
+    })
+%}
+
+### Adding a product as an admin with starting bid lower than 0
+POST {{protocol}}{{host}}:{{port}}/product
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "test",
+  "category_name": "test",
+  "image": "test.png",
+  "description": "test",
+  "location": "test",
+  "current_bid": -50,
+  "end_time": "2023-11-06T09:00"
+}
+
+> {%
+    client.test("Response should return 400 Bad Request", function () {
+        client.assert(response.status === 400, "Response status should be 400");
+        client.assert(response.body.msg === "Startbod moet hoger zijn dan 0", "Message should be: Startbod moet hoger zijn dan 0");
+    })
+%}
+

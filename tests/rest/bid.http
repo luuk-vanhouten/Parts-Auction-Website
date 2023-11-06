@@ -1,0 +1,83 @@
+### Retrieve an user token that can be user for calls that require authentication
+POST {{protocol}}{{host}}:{{port}}/auth
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "user",
+  "password": "user"
+}
+
+### Placing a bid on a product
+PUT {{protocol}}{{host}}:{{port}}/bid/0
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+  "amount": 100,
+  "user": "user"
+}
+
+> {%
+    client.test("Response should return 200 OK", function () {
+        client.assert(response.status === 200, "Response status should be 200");
+        client.assert(response.body.msg === "Bid was placed successfully", "Message should be: Bid was placed successfully");
+    });
+%}
+
+### Placing a bid on a product that doesn't exist
+PUT {{protocol}}{{host}}:{{port}}/bid/999
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+  "amount": 100,
+  "user": "user"
+}
+
+> {%
+    client.test("Response should return 404 Not Found", function () {
+        client.assert(response.status === 404, "Response status should be 404");
+        client.assert(response.body.msg === "Product not found", "Message should be: Product not found");
+    });
+%}
+
+### Placing a bid on a product that is already closed
+PUT {{protocol}}{{host}}:{{port}}/bid/2
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+  "amount": 100,
+  "user": "user"
+}
+
+> {%
+    client.test("Response should return 403 Forbidden", function () {
+        client.assert(response.status === 403, "Response status should be 403");
+        client.assert(response.body.msg === "Product already sold", "Message should be: Product already sold");
+    });
+%}
+
+### Placing a bid on a product with an amount that is lower than the current highest bid
+PUT {{protocol}}{{host}}:{{port}}/bid/1
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{token}}
+
+{
+  "amount": 1,
+  "user": "user"
+}
+
+> {%
+    client.test("Response should return 403 Forbidden", function () {
+        client.assert(response.status === 403, "Response status should be 403");
+        client.assert(response.body.msg === "Bid too low", "Message should be: Bid too low");
+    });
+%}
+
+
